@@ -33,6 +33,11 @@ Rails.application.routes.draw do
     resource :profile, only: %i[show update] do
       resource :avatar, only: %i[destroy], module: :profiles
     end
+    resources :profiles do
+      member do
+        get 'check_profile'
+      end
+    end
     resource :password_change, only: %i[show update]
   end
 
