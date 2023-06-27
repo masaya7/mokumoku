@@ -14,8 +14,17 @@
             <h5>name:<%= @user.name %></h5>
             <h5>hobby:<%= @user.hobby %></h5>
             <h5>profile:<%= @user.profile %></h5>
-            <div>
-              <%= render 'relationships/follow_button', user: @user %>
+              <div>
+                <% if logged_in? && current_user != @user %>
+                  <div id="follow-button-<%= @user.id %>">
+                    <% if current_user.following?(@user) %>
+                      <%= render 'relationships/unfollow_button', user: @user %>
+                    <% else %>
+                      <%= render 'relationships/follow_button', user: @user %>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
             </div>
           </div>
       </div>
