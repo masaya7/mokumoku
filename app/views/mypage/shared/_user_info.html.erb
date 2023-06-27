@@ -17,6 +17,9 @@
           </h2>
           <p class="mb-0 d-block"><%= current_user.email %></p>
         </div>
+        <div>
+          <%= render 'relationships/follow_button', user: @user %>
+        </div>
       </div>
     </div>
   </div>

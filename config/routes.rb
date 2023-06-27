@@ -10,6 +10,13 @@ Rails.application.routes.draw do
   get 'signup', to: 'users#new'
   post 'signup', to: 'users#create'
   resources :users, only: %i[new create]
+
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
+
   resources :events do
     collection do
       get :future
@@ -46,4 +53,6 @@ Rails.application.routes.draw do
       resources :events, only: %i[index]
     end
   end
+
+  resources :relationships, only: [:create, :destroy]
 end
