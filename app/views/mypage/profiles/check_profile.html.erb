@@ -11,9 +11,12 @@
         <%= image_tag @user.decorate.avatar, class: 'avatar-xl rounded-circle' %>
           <div class="ms-3">
             <h4 class="mb-3">Your avatar</h4>
-            <%= @user.name %>
-            <%= @user.hobby %>
-            <%= @user.profile %>
+            <h5>name:<%= @user.name %></h5>
+            <h5>hobby:<%= @user.hobby %></h5>
+            <h5>profile:<%= @user.profile %></h5>
+            <div>
+              <%= render 'relationships/follow_button', user: @user %>
+            </div>
           </div>
       </div>
     </div>
