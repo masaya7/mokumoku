@@ -15,7 +15,10 @@ class User < ApplicationRecord
   has_one_attached :avatar
   has_many :relationships, dependent: :destroy
   has_many :followings, through: :relationships, source: :follower
-  has_many :passive_relationships, class_name: 'Relationship', foreign_key: 'follower_id', dependent: :destroy
+  has_many :passive_relationships, class_name: 'Relationship',
+                                   foreign_key: 'follower_id',
+                                   dependent: :destroy,
+                                   inverse_of: :follower
   has_many :followers, through: :passive_relationships, source: :user
 
   validates :password, length: { minimum: 3 }, if: -> { new_record? || changes[:crypted_password] }
@@ -82,17 +85,17 @@ class User < ApplicationRecord
   end
 
   def follow(other_user)
-    unless self == other_user
-      self.relationships.find_or_create_by(follower_id: other_user.id)
-    end
+    return if self == other_user
+
+    relationships.find_or_create_by(follower_id: other_user.id)
   end
 
   def unfollow(other_user)
-    relationship = self.relationships.find_by(follower_id: other_user.id)
-    relationship.destroy if relationship
+    relationship = relationships.find_by(follower_id: other_user.id)
+    relationship&.destroy if relationship
   end
 
   def following?(other_user)
-    self.followings.include?(other_user)
+    followings.include?(other_user)
   end
 end

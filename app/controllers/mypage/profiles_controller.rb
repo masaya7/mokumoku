@@ -15,7 +15,7 @@ class Mypage::ProfilesController < Mypage::BaseController
   end
 
   def check_profile
-    @user =User.find(params[:id])
+    @user = User.find(params[:id])
   end
 
   private
